@@ -131,41 +131,25 @@ cd TemplateKMP
 ./gradlew assemble
 ```
 
-### Run
+### Run via CLI
 
 <details>
 <summary><b>📱 Android</b></summary>
 
 ```bash
+# 1. Build debug APK
 ./gradlew :composeApp:assembleDebug
-# or use the run configuration in Android Studio
-```
-</details>
 
-<details>
-<summary><b>🍎 iOS</b></summary>
+# 2. Install to connected device/emulator
+adb install composeApp/build/outputs/apk/debug/composeApp-debug.apk
 
-**Option 1 — Xcode:**
-
-Open `iosApp/iosApp.xcodeproj` in Xcode, select a simulator, and click ▶ Run.
-
-**Option 2 — CLI:**
-
-```bash
-# 1. Build (replace simulator name as needed)
-xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp \
-  -destination 'platform=iOS Simulator,name=iPhone 16e' \
-  -configuration Debug build
-
-# 2. Install on booted simulator
-xcrun simctl install booted \
-  ~/Library/Developer/Xcode/DerivedData/iosApp-*/Build/Products/Debug-iphonesimulator/TemplateKmp.app
-
-# 3. Launch
-xcrun simctl launch booted com.template.project.TemplateKmp
+# 3. Launch the app
+adb shell am start -n com.template.project/.MainActivity
 ```
 
-> **Note:** If the simulator does not appear in Xcode destinations, ensure `IPHONEOS_DEPLOYMENT_TARGET` in the Xcode project is ≤ your simulator's iOS version.
+> **Prerequisites:**
+> - Emulator running (`adb devices` to verify) or physical device connected with USB debugging enabled.
+> - `adb` available in PATH (included with Android SDK `platform-tools`).
 
 </details>
 
@@ -173,8 +157,55 @@ xcrun simctl launch booted com.template.project.TemplateKmp
 <summary><b>🖥️ Desktop (JVM)</b></summary>
 
 ```bash
+# Run directly (opens desktop window)
 ./gradlew :composeApp:run
 ```
+
+To create a native distributable (installer):
+
+```bash
+# macOS → .dmg | Windows → .msi | Linux → .deb
+./gradlew :composeApp:createDistributable
+```
+
+> Output location: `composeApp/build/compose/binaries/`
+
+</details>
+
+<details>
+<summary><b>🍎 iOS (macOS only)</b></summary>
+
+**Option 1 — Xcode (Recommended):**
+
+Open `iosApp/iosApp.xcodeproj` in Xcode, select a simulator, and click ▶ Run.
+
+**Option 2 — CLI:**
+
+```bash
+# 1. List available simulators (find your device name)
+xcrun simctl list devices available
+
+# 2. Boot simulator (if not already running)
+xcrun simctl boot "iPhone 16"
+
+# 3. Build the project
+xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp \
+  -destination 'platform=iOS Simulator,name=iPhone 16' \
+  -configuration Debug build
+
+# 4. Install on booted simulator
+xcrun simctl install booted \
+  ~/Library/Developer/Xcode/DerivedData/iosApp-*/Build/Products/Debug-iphonesimulator/TemplateKmp.app
+
+# 5. Launch
+xcrun simctl launch booted com.template.project.TemplateKmp
+```
+
+> **Prerequisites:**
+> - macOS with **Xcode 15+** and Command Line Tools (`xcode-select --install`).
+> - First build will be slow due to Kotlin/Native compilation.
+> - If "No matching destination" error appears, check that `IPHONEOS_DEPLOYMENT_TARGET` ≤ your simulator's iOS version.
+
 </details>
 
 ---

@@ -14,6 +14,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -62,7 +63,9 @@ private val bottomNavItems = listOf(
 )
 
 @Composable
-fun App() {
+fun App(
+    onThemeChanged: ((isDark: Boolean) -> Unit)? = null,
+) {
     KoinContext {
         val appPreferences = koinInject<AppPreferences>()
         val themeMode by appPreferences.observeThemeMode()
@@ -72,6 +75,10 @@ fun App() {
             ThemeMode.LIGHT -> false
             ThemeMode.DARK -> true
             ThemeMode.SYSTEM -> isSystemInDarkTheme()
+        }
+
+        LaunchedEffect(isDarkTheme) {
+            onThemeChanged?.invoke(isDarkTheme)
         }
 
         AppTheme(darkTheme = isDarkTheme) {

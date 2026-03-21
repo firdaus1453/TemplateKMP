@@ -1,0 +1,32 @@
+*.iml
+.kotlin
+.gradle
+**/build/
+xcuserdata
+!src/**/build/
+local.properties
+.idea
+.DS_Store
+captures
+.externalNativeBuild
+.cxx
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+node_modules/
+
+# Security — keystore and signing
+*.jks
+*.keystore
+signing.properties
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
+
+# Kover/coverage reports
+**/build/reports/kover/
+

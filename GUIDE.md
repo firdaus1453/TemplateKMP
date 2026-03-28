@@ -1558,7 +1558,6 @@ Untuk mengganti dari `com.template.project` ke package name kamu:
 | **Room migration error** | Periksa schema directory dan migration steps |
 | **Desktop crash** | Pastikan `kotlinx-coroutines-swing` ada di `desktopMain.dependencies` |
 | **Release build crash** | Periksa ProGuard rules — `@Serializable` classes harus di-keep |
-| **Chucker conflicts** | Chucker hanya Android — gunakan `library-no-op` untuk release |
 | **DataStore path error** | DataStore memerlukan `expect`/`actual` per platform untuk file path |
 
 ### Quick Debug Commands

@@ -49,8 +49,8 @@ TemplateKMP/
 │   ├── profile/     (domain, data, presentation)
 │   ├── settings/    (domain, data, presentation)
 │   ├── search/      (domain, data, presentation)
-│   ├── notifications/ (domain, presentation)     # stub
-│   └── media/       (domain, presentation)        # stub
+│   ├── notifications/ (domain, presentation)
+│   └── media/       (domain, presentation)
 ├── 📄 gradle/libs.versions.toml
 └── ⚙️ settings.gradle.kts
 ```
@@ -108,7 +108,6 @@ core/presentation → core/domain + core/designsystem
 | [Turbine](https://github.com/cashapp/turbine) | 1.2.0 | Flow testing |
 | [Kermit](https://github.com/touchlab/Kermit) | 2.0.6 | Multiplatform logging |
 | [BuildKonfig](https://github.com/nickcaballero/buildkonfig-kmp) | 0.17.1 | Build constants |
-| [Chucker](https://github.com/ChuckerTeam/chucker) | 4.1.0 | HTTP debugging (Android) |
 
 ---
 

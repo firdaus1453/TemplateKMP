@@ -125,7 +125,6 @@ See [OFFLINE_FIRST.md](references/OFFLINE_FIRST.md).
 - [ ] Apply Kover to testable modules
 - [ ] Ensure at least one test exists (add a simple dummy test if needed) to prevent "No tests discovered" Kover failure
 - [ ] Run: `./gradlew allTests koverHtmlReport`
-- [ ] Integrate Chucker for Android debug HTTP inspection
 
 See [TESTING.md](references/TESTING.md).
 
@@ -138,7 +137,7 @@ See [CODE_CONVENTIONS.md](references/CODE_CONVENTIONS.md).
 
 | Problem | Solution |
 |---------|----------|
-| HTTP issues | Chucker (Android), Ktor Logging (all) |
+| HTTP issues | Ktor Logging (all platforms) |
 | DI resolution fails | Core modules must load before features in Koin |
 | Database migration error | Check Room schema dir, verify migration steps |
 | Flow not emitting | Check `SharingStarted.WhileSubscribed(5_000)` |
@@ -169,7 +168,6 @@ See [PRODUCTION.md](references/PRODUCTION.md).
 - API keys go in `local.properties` only — never commit secrets.
 - Offline-first UI must observe Room `Flow`, not network responses.
 - Never catch `CancellationException` — always re-throw.
-- Chucker is Android-only — use `no-op` variant for release builds.
 - `TYPESAFE_PROJECT_ACCESSORS` must be enabled in `settings.gradle.kts`.
 - DataStore file path needs `expect`/`actual` — each platform stores differently.
 - Desktop target needs `kotlinx-coroutines-swing` for coroutine dispatching.
@@ -198,7 +196,6 @@ See [PRODUCTION.md](references/PRODUCTION.md).
 | DataStore | Session storage | 1.1+ |
 | Kover | Test coverage | 0.9+ |
 | Turbine | Flow testing | 1.2+ |
-| Chucker | HTTP debugging (Android) | 4.1+ |
 | BuildKonfig | Build constants | 0.15+ |
 | Kermit | Multiplatform logging | 2.0+ |
 | Coil | Image loading | 3.0+ |

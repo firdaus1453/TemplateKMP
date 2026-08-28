@@ -1,0 +1,20 @@
+appId: com.template.project
+---
+- launchApp:
+    clearState: true
+
+- assertVisible: "Welcome Back"
+
+- tapOn: "Username"
+- inputText: "emilys"
+
+- tapOn: "Password"
+- inputText: "emilyspass"
+
+- hideKeyboard
+
+- tapOn: "Sign In"
+
+- extendedWaitUntil:
+    visible: "Home"
+    timeout: 10000

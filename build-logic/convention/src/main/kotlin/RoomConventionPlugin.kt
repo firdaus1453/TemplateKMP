@@ -22,7 +22,6 @@ class RoomConventionPlugin : Plugin<Project> {
                 "commonMainImplementation"(libs.findLibrary("androidx-room-runtime").get())
                 "commonMainImplementation"(libs.findLibrary("sqlite-bundled").get())
                 "kspAndroid"(libs.findLibrary("androidx-room-compiler").get())
-                "kspIosX64"(libs.findLibrary("androidx-room-compiler").get())
                 "kspIosArm64"(libs.findLibrary("androidx-room-compiler").get())
                 "kspIosSimulatorArm64"(libs.findLibrary("androidx-room-compiler").get())
                 "kspDesktop"(libs.findLibrary("androidx-room-compiler").get())

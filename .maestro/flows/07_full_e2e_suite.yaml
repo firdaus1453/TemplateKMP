@@ -1,0 +1,48 @@
+appId: com.template.project
+---
+# 1. Launch app from fresh state
+- launchApp:
+    clearState: true
+
+- assertVisible: "Welcome Back"
+- assertVisible: "Sign in to continue"
+
+# 2. Perform authentication
+- tapOn: "Username"
+- inputText: "emilys"
+
+- tapOn: "Password"
+- inputText: "emilyspass"
+
+- hideKeyboard
+
+- tapOn: "Sign In"
+
+# 3. Verify landing on Home screen
+- extendedWaitUntil:
+    visible: "Home"
+    timeout: 10000
+
+# 4. Navigate through all tabs
+- tapOn: "Search"
+- assertVisible: "Search products..."
+
+- tapOn: "Notifications"
+- assertVisible: "Notifications"
+
+- tapOn: "Settings"
+- assertVisible: "Appearance"
+- tapOn: "Dark"
+- tapOn: "Light"
+- tapOn: "System Default"
+
+- tapOn: "Profile"
+- extendedWaitUntil:
+    visible: "Logout"
+    timeout: 5000
+
+# 5. Logout and return to Login
+- tapOn: "Logout"
+- extendedWaitUntil:
+    visible: "Welcome Back"
+    timeout: 5000

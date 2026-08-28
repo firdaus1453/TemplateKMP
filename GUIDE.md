@@ -36,12 +36,12 @@
 
 | Software | Versi Minimum | Keterangan |
 |----------|---------------|------------|
-| **Android Studio** | Ladybug (2024.2+) | IDE utama, sudah termasuk KMP plugin |
-| **AGP** | 9.1+ | Base config & KMP conventions |
+| **Android Studio** | Ladybug / Otter (2025.2+) | IDE utama, sudah termasuk KMP plugin |
+| **AGP** | 9.3.0 | Base config & KMP library conventions |
+| **Gradle** | 9.5.0 | Build Tool |
 | **JDK** | 17+ | Wajib untuk Gradle dan kompilasi Kotlin |
 | **Xcode** | 15+ | Hanya untuk macOS, diperlukan untuk build iOS |
-| **Xcode Command Line Tools** | - | `xcode-select --install` |
-| **CocoaPods** (opsional) | - | Jika ada dependensi iOS native |
+| **Maestro** | 2.9+ | Automated UI & E2E Testing untuk AI & CI/CD |
 | **Git** | - | Version control |
 
 ### 1.2 Instalasi Step-by-Step
@@ -1315,14 +1315,17 @@ class HomeViewModelTest {
 }
 ```
 
-### 12.4 Menjalankan Test
-
+### 12.4 Menjalankan Unit Test
+ 
 ```bash
-# Jalankan semua test
+# Jalankan semua unit test multiplatform (Desktop/JVM + Common)
+./gradlew desktopTest
+
+# Jalankan semua test task
 ./gradlew allTests
 
 # Jalankan test module spesifik
-./gradlew :feature:home:presentation:allTests
+./gradlew :feature:home:presentation:desktopTest
 
 # Generate coverage report (HTML)
 ./gradlew koverHtmlReport
@@ -1331,6 +1334,34 @@ class HomeViewModelTest {
 # Verify coverage threshold (gagal jika di bawah minimum)
 ./gradlew koverVerify
 ```
+
+### 12.5 🤖 Automated UI & E2E Testing dengan Maestro (No Human Needed)
+
+Project ini dilengkapi dengan **Maestro UI automation suite** di folder `.maestro/flows/` sehingga AI agent maupun CI/CD pipeline dapat menjalankan full automated test tanpa campur tangan manusia.
+
+```bash
+# 1. Jalankan semua flow Maestro otomatis (build APK, install, & run)
+./scripts/run_maestro_tests.sh
+
+# 2. Atau melalui task Gradle
+./gradlew maestroTest
+
+# 3. Jalankan flow spesifik
+./scripts/run_maestro_tests.sh .maestro/flows/01_app_launch.yaml
+./scripts/run_maestro_tests.sh .maestro/flows/02_auth_flow.yaml
+./scripts/run_maestro_tests.sh .maestro/flows/07_full_e2e_suite.yaml
+```
+
+**Daftar Flow Maestro:**
+- `01_app_launch.yaml` — Verifikasi tampilan login screen & elemen form
+- `02_auth_flow.yaml` — Input credential (`emilys` / `emilyspass`), klik sign in, landing ke Home
+- `03_navigation_flow.yaml` — Navigasi 5 tab (Home, Search, Notifications, Settings, Profile)
+- `04_search_flow.yaml` — Input query pencarian, verifikasi filter & clear
+- `05_settings_flow.yaml` — Ganti tema Dark/Light/System & verifikasi about
+- `06_profile_and_logout_flow.yaml` — Verifikasi profil user dan aksi logout
+- `07_full_e2e_suite.yaml` — Full continuous journey dari start sampai logout
+
+Hasil test otomatis di-generate dalam format **JUnit XML** di `build/reports/maestro/maestro-results.xml`.
 
 > 💡 **Tips Testing:**
 > - Selalu gunakan `Dispatchers.setMain(testDispatcher)` di `@BeforeTest` dan `resetMain()` di `@AfterTest` (Cegah Deadlock ViewModel Turbine)

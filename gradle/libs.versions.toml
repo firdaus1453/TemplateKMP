@@ -1,11 +1,11 @@
 [versions]
 # Build tools
-agp = "9.1.0"
+agp = "9.3.0"
 kotlin = "2.3.0"
-ksp = "2.3.6"
+ksp = "2.3.11"
 
 # Compose
-compose-multiplatform = "1.10.0"
+compose-multiplatform = "1.12.0"
 compose-lifecycle = "2.9.6"
 navigation-compose = "2.9.0-beta04"
 jetbrains-core-bundle = "1.0.1"
@@ -42,18 +42,18 @@ kotlinx-coroutines-swing = "1.10.2"
 
 # Android desugar
 androidDesugarJdkLibs = "2.1.5"
-androidTools = "32.0.0"
+androidTools = "32.3.0"
 
 # Project config — CHANGE THESE for your project
 projectApplicationId = "com.template.project"
 projectVersionName = "1.0"
 projectMinSdkVersion = "26"
-projectTargetSdkVersion = "36"
-projectCompileSdkVersion = "36"
+projectTargetSdkVersion = "37"
+projectCompileSdkVersion = "37"
 projectVersionCode = "1"
 
 # Compose additional
-compose-jetbrains = "1.10.0"
+compose-jetbrains = "1.12.0"
 jetbrains-savedstate = "1.3.1"
 adaptive = "1.2.0-alpha04"
 

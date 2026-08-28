@@ -1,0 +1,37 @@
+appId: com.template.project
+---
+- launchApp
+
+# Login if on login screen
+- runFlow:
+    when:
+      visible: "Welcome Back"
+    commands:
+      - tapOn: "Username"
+      - inputText: "emilys"
+      - tapOn: "Password"
+      - inputText: "emilyspass"
+      - hideKeyboard
+      - tapOn: "Sign In"
+      - extendedWaitUntil:
+          visible: "Home"
+          timeout: 10000
+
+# Test navigation tabs
+- tapOn: "Search"
+- assertVisible: "Search products..."
+
+- tapOn: "Notifications"
+- assertVisible: "Notifications"
+
+- tapOn: "Settings"
+- assertVisible: "Appearance"
+- assertVisible: "About"
+
+- tapOn: "Profile"
+- extendedWaitUntil:
+    visible: "Logout"
+    timeout: 5000
+
+- tapOn: "Home"
+- assertVisible: "Home"

@@ -8,13 +8,15 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 internal fun Project.configureIosTargets() {
     extensions.configure<KotlinMultiplatformExtension> {
         listOf(
-            iosX64(),
             iosArm64(),
             iosSimulatorArm64()
         ).forEach {
             it.binaries.framework {
                 baseName = "ComposeApp"
                 isStatic = true
+                freeCompilerArgs += listOf(
+                    "-Xbinary=bundleId=com.template.project.ComposeApp"
+                )
             }
         }
     }
@@ -32,7 +34,6 @@ internal fun KotlinMultiplatformExtension.applyHierarchyTemplate() {
         common {
             group("mobile") {
                 withAndroidTarget()
-                withIosX64()
                 withIosArm64()
                 withIosSimulatorArm64()
             }

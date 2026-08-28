@@ -1,0 +1,29 @@
+appId: com.template.project
+---
+- launchApp
+
+- runFlow:
+    when:
+      visible: "Welcome Back"
+    commands:
+      - tapOn: "Username"
+      - inputText: "emilys"
+      - tapOn: "Password"
+      - inputText: "emilyspass"
+      - hideKeyboard
+      - tapOn: "Sign In"
+      - extendedWaitUntil:
+          visible: "Home"
+          timeout: 10000
+
+- tapOn: "Profile"
+
+- extendedWaitUntil:
+    visible: "Logout"
+    timeout: 5000
+
+- tapOn: "Logout"
+
+- extendedWaitUntil:
+    visible: "Welcome Back"
+    timeout: 5000

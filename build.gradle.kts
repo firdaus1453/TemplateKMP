@@ -34,3 +34,11 @@ dependencies {
     kover(projects.feature.notifications.domain)
     kover(projects.feature.notifications.presentation)
 }
+
+tasks.register<Exec>("maestroTest") {
+    group = "verification"
+    description = "Runs automated Maestro UI tests for AI and CI/CD"
+    
+    val targetFlow = project.findProperty("flow")?.toString() ?: ".maestro/flows/"
+    commandLine("bash", "$rootDir/scripts/run_maestro_tests.sh", targetFlow)
+}

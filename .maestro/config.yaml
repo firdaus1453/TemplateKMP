@@ -1,0 +1,4 @@
+appId: com.template.project
+---
+- launchApp:
+    clearState: true

@@ -5,11 +5,14 @@
 **Production-ready Kotlin Multiplatform template with Clean Architecture**
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.0-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org)
-[![Compose Multiplatform](https://img.shields.io/badge/Compose_Multiplatform-1.10.0-4285F4?logo=jetpackcompose&logoColor=white)](https://www.jetbrains.com/compose-multiplatform/)
+[![Compose Multiplatform](https://img.shields.io/badge/Compose_Multiplatform-1.12.0-4285F4?logo=jetpackcompose&logoColor=white)](https://www.jetbrains.com/compose-multiplatform/)
+[![AGP](https://img.shields.io/badge/AGP-9.3.0-3DDC84?logo=android&logoColor=white)](https://developer.android.com/studio/releases/gradle-plugin)
+[![Gradle](https://img.shields.io/badge/Gradle-9.5.0-02303A?logo=gradle&logoColor=white)](https://gradle.org)
 [![Platform](https://img.shields.io/badge/Platform-Android_|_iOS_|_Desktop-green)](https://kotlinlang.org/docs/multiplatform.html)
+[![Maestro](https://img.shields.io/badge/Testing-Maestro_Automated-orange)](https://maestro.mobile.dev)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-*A scalable, multi-module KMP/CMP template — ready to build your next cross-platform app.*
+*A scalable, multi-module KMP/CMP template — aligned with the 2026 JetBrains KMP Default Structure & AGP 9.3.*
 
 </div>
 
@@ -17,13 +20,15 @@
 
 ## ✨ Features
 
-- 🎯 **Multi-module Clean Architecture** — Domain, Data, Presentation separation per feature
-- 🧩 **Convention Plugins** — 9 pre-built Gradle plugins for consistent module configuration
+- 🎯 **Multi-module Clean Architecture** — JetBrains 2026 default structure with pure entry points (`androidApp`) and shared KMP libraries (`composeApp`, `core/*`, `feature/*`)
+- 🚀 **AGP 9.3 & Gradle 9.5 Ready** — Built-in Kotlin Android support and `com.android.kotlin.multiplatform.library`
+- 🤖 **100% Automated Testing with Maestro** — Full AI-driven and CI/CD automated UI testing with zero human intervention
+- 🧩 **Convention Plugins** — Pre-built Gradle convention plugins for consistent module configuration
 - 🔐 **Authentication Ready** — Session storage, Bearer auth, auto token refresh via Ktor
 - 🎨 **Design System** — Centralized theme, typography, and reusable UI components
 - 📱 **MVI Pattern** — Unidirectional data flow with ViewModel + StateFlow
 - 🗄️ **Room Database** — Offline-first ready with convention plugin
-- 🧪 **Testing Infrastructure** — Unit tests with Turbine + Kover code coverage
+- 🧪 **Testing Infrastructure** — Unit tests with Turbine + Kover code coverage + Maestro E2E
 - 🌐 **Ktor Networking** — Type-safe HTTP client with error handling
 - 💉 **Koin DI** — Lightweight dependency injection across all platforms
 - 🖼️ **Coil Image Loading** — Multiplatform image loading and caching
@@ -33,11 +38,17 @@
 
 ## 🏛️ Architecture
 
+Aligned with JetBrains' **New KMP Default Project Structure**:
+
 ```
 TemplateKMP/
-├── 🔧 build-logic/convention/         # 9 Gradle convention plugins
-├── 📱 androidApp/                      # Pure Android Entry Point
-├── 📱 composeApp/                      # Composition root & Shared UI (Android, iOS, Desktop)
+├── 🔧 build-logic/convention/         # Gradle convention plugins (AGP 9.3 + CMP 1.12.0)
+├── 📱 androidApp/                      # Standalone Android Application Entry Point (AGP 9.3 application)
+├── 📱 composeApp/                      # Composition root & Shared UI Library (KMP Library)
+├── 🤖 .maestro/                        # Maestro UI automated test flows for AI/CI
+│   ├── config.yaml
+│   └── flows/                         # Launch, Auth, Navigation, Search, Settings, Profile, E2E
+├── 📜 scripts/run_maestro_tests.sh    # One-click automated Maestro test runner for AI
 ├── 🏗️ core/
 │   ├── domain/                         # Pure Kotlin: Result, DataError, interfaces
 │   ├── data/                           # Ktor, DataStore, SessionStorage
@@ -67,6 +78,8 @@ core/presentation → core/domain + core/designsystem
 ```
 
 > **Key Principles:**
+> - `androidApp` = Application entry point with built-in Kotlin and AGP 9.3
+> - `composeApp` & KMP modules = use `com.android.kotlin.multiplatform.library`
 > - `domain` = pure Kotlin, **ZERO** framework imports
 > - `data` implements domain interfaces
 > - `presentation` depends on domain only, **never** on data
@@ -79,11 +92,11 @@ core/presentation → core/domain + core/designsystem
 
 | Plugin | ID | Purpose |
 |--------|----|---------|
-| `KmpLibraryConventionPlugin` | `template.kmp.library` | Pure Kotlin Multiplatform library module |
+| `KmpLibraryConventionPlugin` | `template.kmp.library` | Pure Kotlin Multiplatform library module (`com.android.kotlin.multiplatform.library`) |
 | `CmpLibraryConventionPlugin` | `template.cmp.library` | Compose Multiplatform library module |
 | `CmpFeatureConventionPlugin` | `template.cmp.feature` | Feature presentation module (Compose + ViewModel) |
 | `CmpApplicationConventionPlugin` | `template.cmp.application` | Main app module (Android + iOS + Desktop) |
-| `AndroidApplicationConventionPlugin` | `template.android.application` | Android application base config |
+| `AndroidApplicationConventionPlugin` | `template.android.application` | Android application base config (AGP 9.3) |
 | `AndroidApplicationComposeConventionPlugin` | `template.android.application.compose` | Android Compose integration |
 | `KoverConventionPlugin` | `template.kover` | Kover test coverage reporting |
 | `RoomConventionPlugin` | `template.room` | Room database with KSP |
@@ -95,9 +108,12 @@ core/presentation → core/domain + core/designsystem
 
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| [AGP](https://developer.android.com/studio/releases/gradle-plugin) | 9.1+ | Android build tools |
+| [AGP](https://developer.android.com/studio/releases/gradle-plugin) | 9.3.0 | Android Gradle Plugin |
+| [Gradle](https://gradle.org) | 9.5.0 | Build Tool |
 | [Kotlin](https://kotlinlang.org) | 2.3.0 | Language |
-| [Compose Multiplatform](https://www.jetbrains.com/compose-multiplatform/) | 1.10.0 | UI framework |
+| [KSP](https://github.com/google/ksp) | 2.3.11 | Kotlin Symbol Processing |
+| [Compose Multiplatform](https://www.jetbrains.com/compose-multiplatform/) | 1.12.0 | UI framework |
+| [Maestro](https://maestro.mobile.dev) | 2.9.0 | Automated AI UI Testing |
 | [Koin](https://insert-koin.io) | 4.1.0 | Dependency injection |
 | [Ktor](https://ktor.io) | 3.2.3 | HTTP client |
 | [Room](https://developer.android.com/kotlin/multiplatform/room) | 2.7.2 | Database (offline-first) |
@@ -255,10 +271,45 @@ xcrun simctl launch booted com.template.project.TemplateKmp
 
 ---
 
-## 🧪 Testing
+## 🧪 Testing & Automated Verification
+
+### 1. 🤖 Automated E2E Testing with Maestro (Zero Human Intervention)
+
+This template includes a complete **Maestro UI automation suite** specifically designed for **AI coding agents** and **CI/CD pipelines** to run fully automated end-to-end tests without human interaction.
 
 ```bash
-# Run all tests
+# Run all automated Maestro flows via the one-click script
+./scripts/run_maestro_tests.sh
+
+# Or run via Gradle task
+./gradlew maestroTest
+
+# Run a specific test flow
+./scripts/run_maestro_tests.sh .maestro/flows/01_app_launch.yaml
+./scripts/run_maestro_tests.sh .maestro/flows/02_auth_flow.yaml
+./scripts/run_maestro_tests.sh .maestro/flows/07_full_e2e_suite.yaml
+```
+
+#### Included Maestro Flows (`.maestro/flows/`):
+- `01_app_launch.yaml` — Validates app initialization and splash/login screen visibility
+- `02_auth_flow.yaml` — Tests full sign-in interaction and navigation to Home
+- `03_navigation_flow.yaml` — Verifies tab switching across Home, Search, Notifications, Settings, Profile
+- `04_search_flow.yaml` — Tests search text input, debounce queries, and query clearing
+- `05_settings_flow.yaml` — Tests theme switching (Light, Dark, System Default) and app info
+- `06_profile_and_logout_flow.yaml` — Tests user profile display and session logout
+- `07_full_e2e_suite.yaml` — Complete continuous end-to-end user journey
+
+JUnit XML reports are automatically saved to `build/reports/maestro/maestro-results.xml` for AI and CI validation.
+
+---
+
+### 2. 🔬 Multiplatform Unit & ViewModel Tests
+
+```bash
+# Run all multiplatform unit tests (Desktop/JVM + Common)
+./gradlew desktopTest
+
+# Run all test tasks
 ./gradlew allTests
 
 # Generate coverage report

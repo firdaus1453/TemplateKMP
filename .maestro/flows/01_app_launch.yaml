@@ -1,0 +1,10 @@
+appId: com.template.project
+---
+- launchApp:
+    clearState: true
+
+- assertVisible: "Welcome Back"
+- assertVisible: "Sign in to continue"
+- assertVisible: "Username"
+- assertVisible: "Password"
+- assertVisible: "Sign In"

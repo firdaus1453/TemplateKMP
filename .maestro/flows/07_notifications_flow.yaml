@@ -1,0 +1,21 @@
+appId: com.template.project
+---
+- launchApp:
+    clearState: true
+
+# Auth
+- tapOn: "Username"
+- inputText: "emilys"
+- tapOn: "Password"
+- inputText: "emilyspass"
+- hideKeyboard
+- tapOn: "Sign In"
+
+- extendedWaitUntil:
+    visible: "Home"
+    timeout: 10000
+
+# Notifications Flow
+- tapOn: "Notifications"
+- assertVisible: "Notifications"
+- assertVisible: "Configure FCM (Android) and APNs (iOS) to enable push notifications."

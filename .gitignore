@@ -30,3 +30,6 @@ GoogleService-Info.plist
 # Kover/coverage reports
 **/build/reports/kover/
 
+# DataStore test files
+*.preferences_pb
+

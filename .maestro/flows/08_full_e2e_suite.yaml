@@ -23,7 +23,7 @@ appId: com.template.project
     visible: "Home"
     timeout: 10000
 
-# 4. Navigate through all tabs
+# 4. Navigate through all tabs & features
 - tapOn: "Search"
 - assertVisible: "Search products..."
 

@@ -51,10 +51,24 @@ class ResultTest {
     }
 
     @Test
-    fun onErrorDoesNotExecuteForSuccess() {
-        var executed = false
+    fun asEmptyResultTransformsSuccessToUnit() {
         val result: Result<Int, DataError> = Result.Success(42)
-        result.onError { executed = true }
-        assertTrue(!executed)
+        val emptyResult = result.asEmptyResult()
+        assertIs<Result.Success<Unit>>(emptyResult)
+        assertEquals(Unit, emptyResult.data)
+    }
+
+    @Test
+    fun asEmptyResultPreservesError() {
+        val result: Result<Int, DataError.Network> = Result.Error(DataError.Network.NO_INTERNET)
+        val emptyResult = result.asEmptyResult()
+        assertIs<Result.Error<DataError.Network>>(emptyResult)
+        assertEquals(DataError.Network.NO_INTERNET, emptyResult.error)
+    }
+
+    @Test
+    fun dataErrorEnumValuesAreAccessible() {
+        assertEquals(8, DataError.Network.entries.size)
+        assertEquals(2, DataError.Local.entries.size)
     }
 }

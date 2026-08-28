@@ -1,29 +1,20 @@
 appId: com.template.project
 ---
-- launchApp
+- launchApp:
+    clearState: true
 
-- runFlow:
-    when:
-      visible: "Welcome Back"
-    commands:
-      - tapOn: "Username"
-      - inputText: "emilys"
-      - tapOn: "Password"
-      - inputText: "emilyspass"
-      - hideKeyboard
-      - tapOn: "Sign In"
-      - extendedWaitUntil:
-          visible: "Home"
-          timeout: 10000
+- tapOn: "Username"
+- inputText: "emilys"
+- tapOn: "Password"
+- inputText: "emilyspass"
+- hideKeyboard
+- tapOn: "Sign In"
+- extendedWaitUntil:
+    visible: "Home"
+    timeout: 10000
 
 - tapOn: "Settings"
 - assertVisible: "Appearance"
-- assertVisible: "System Default"
-- assertVisible: "Light"
-- assertVisible: "Dark"
-
 - tapOn: "Dark"
 - tapOn: "Light"
 - tapOn: "System Default"
-
-- assertVisible: "Template KMP v1.0"

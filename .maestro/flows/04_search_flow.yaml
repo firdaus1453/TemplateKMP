@@ -1,28 +1,22 @@
 appId: com.template.project
 ---
-- launchApp
+- launchApp:
+    clearState: true
 
-- runFlow:
-    when:
-      visible: "Welcome Back"
-    commands:
-      - tapOn: "Username"
-      - inputText: "emilys"
-      - tapOn: "Password"
-      - inputText: "emilyspass"
-      - hideKeyboard
-      - tapOn: "Sign In"
-      - extendedWaitUntil:
-          visible: "Home"
-          timeout: 10000
+- tapOn: "Username"
+- inputText: "emilys"
+- tapOn: "Password"
+- inputText: "emilyspass"
+- hideKeyboard
+- tapOn: "Sign In"
+- extendedWaitUntil:
+    visible: "Home"
+    timeout: 10000
 
 - tapOn: "Search"
 - assertVisible: "Search products..."
-
 - tapOn: "Search products..."
 - inputText: "Essence"
-
 - hideKeyboard
-
 - assertVisible: "Clear"
 - tapOn: "Clear"

@@ -12,6 +12,8 @@ import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.serialization.SerializationException
 
@@ -36,6 +38,7 @@ suspend inline fun <reified Request : Any, reified Response : Any> HttpClient.sa
     return safeCall {
         post {
             url(constructUrl(route))
+            contentType(ContentType.Application.Json)
             setBody(body)
         }
     }
@@ -48,6 +51,7 @@ suspend inline fun <reified Request : Any, reified Response : Any> HttpClient.sa
     return safeCall {
         put {
             url(constructUrl(route))
+            contentType(ContentType.Application.Json)
             setBody(body)
         }
     }

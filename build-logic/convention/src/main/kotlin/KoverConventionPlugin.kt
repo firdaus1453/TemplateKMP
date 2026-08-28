@@ -31,18 +31,39 @@ class KoverConventionPlugin : Plugin<Project> {
                     filters {
                         excludes {
                             classes(
-                                "*_Factory",
+                                "*_Factory*",
                                 "*_HiltModules*",
                                 "*BuildKonfig*",
                                 "*ComposableSingletons*",
-                                "*.di.*Module*",
-                                "*_Impl",
-                                "*_Impl\$*",
+                                "*ScreenKt*",
+                                "*Screen$*",
+                                "*Screen",
+                                "*ModuleKt*",
+                                "*Module",
+                                "*_Impl*",
+                                "*\$serializer*",
+                                "*ObserveAsEventsKt*",
+                                "*PlatformDataStoreModule*",
+                                "*PlatformEngine*",
+                                "*HttpClientFactory*",
+                                "*DataStoreFactory*",
+                                "*DataStorePlatform*",
+                                "*AppThemeKt*",
+                                "*AppKt*",
                             )
                             packages(
-                                "*.di",
-                                "*.theme",
-                                "*.designsystem",
+                                "com.template.project.core.data.di",
+                                "com.template.project.core.designsystem",
+                                "com.template.project.core.designsystem.components",
+                                "com.template.project.feature.auth.presentation.di",
+                                "com.template.project.feature.home.data.di",
+                                "com.template.project.feature.home.presentation.di",
+                                "com.template.project.feature.profile.data.di",
+                                "com.template.project.feature.profile.presentation.di",
+                                "com.template.project.feature.search.data.di",
+                                "com.template.project.feature.search.presentation.di",
+                                "com.template.project.feature.settings.data.di",
+                                "com.template.project.feature.settings.presentation.di",
                             )
                         }
                     }

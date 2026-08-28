@@ -15,6 +15,7 @@ dependencies {
     // Kover aggregation — all testable modules
     kover(projects.core.domain)
     kover(projects.core.data)
+    kover(projects.core.presentation)
     kover(projects.feature.auth.domain)
     kover(projects.feature.auth.presentation)
     kover(projects.feature.home.domain)
@@ -33,6 +34,50 @@ dependencies {
     kover(projects.feature.media.presentation)
     kover(projects.feature.notifications.domain)
     kover(projects.feature.notifications.presentation)
+}
+
+kover {
+    reports {
+        filters {
+            excludes {
+                classes(
+                    "*_Factory*",
+                    "*_HiltModules*",
+                    "*BuildKonfig*",
+                    "*ComposableSingletons*",
+                    "*ScreenKt*",
+                    "*Screen$*",
+                    "*Screen",
+                    "*ModuleKt*",
+                    "*Module",
+                    "*_Impl*",
+                    "*\$serializer*",
+                    "*ObserveAsEventsKt*",
+                    "*PlatformDataStoreModule*",
+                    "*PlatformEngine*",
+                    "*HttpClientFactory*",
+                    "*DataStoreFactory*",
+                    "*DataStorePlatform*",
+                    "*AppThemeKt*",
+                    "*AppKt*",
+                )
+                packages(
+                    "com.template.project.core.data.di",
+                    "com.template.project.core.designsystem",
+                    "com.template.project.core.designsystem.components",
+                    "com.template.project.feature.auth.presentation.di",
+                    "com.template.project.feature.home.data.di",
+                    "com.template.project.feature.home.presentation.di",
+                    "com.template.project.feature.profile.data.di",
+                    "com.template.project.feature.profile.presentation.di",
+                    "com.template.project.feature.search.data.di",
+                    "com.template.project.feature.search.presentation.di",
+                    "com.template.project.feature.settings.data.di",
+                    "com.template.project.feature.settings.presentation.di",
+                )
+            }
+        }
+    }
 }
 
 tasks.register<Exec>("maestroTest") {

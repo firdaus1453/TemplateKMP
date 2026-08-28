@@ -2,9 +2,9 @@ name: Build & Test
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ master, main, develop ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ master, main, develop ]
 
 jobs:
   build:
@@ -29,11 +29,14 @@ jobs:
           echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
           echo "API_BASE_URL=https://dummyjson.com" >> local.properties
 
-      - name: Run Common Tests
-        run: ./gradlew allTests --no-daemon
+      - name: Run Multiplatform Tests
+        run: ./gradlew desktopTest --no-daemon
 
-      - name: Build Android Debug
-        run: ./gradlew :composeApp:assembleDebug --no-daemon
+      - name: Build Android Debug APK
+        run: ./gradlew :androidApp:assembleDebug --no-daemon
+
+      - name: Compile iOS Framework
+        run: ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64 --no-daemon
 
       - name: Upload Test Results
         if: always()

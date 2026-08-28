@@ -33,7 +33,12 @@ if [ -z "$ADB_DEVICES" ]; then
     echo "   If testing iOS, Maestro will automatically attach to active iOS Simulator."
 else
     echo "✅ Android device(s) detected:"
-    echo "$ADB_DEVICES"
+    FIRST_DEVICE=$(echo "$ADB_DEVICES" | grep "emulator" | head -n 1 | awk '{print $1}')
+    if [ -z "$FIRST_DEVICE" ]; then
+        FIRST_DEVICE=$(echo "$ADB_DEVICES" | head -n 1 | awk '{print $1}')
+    fi
+    DEVICE_FLAG="--device $FIRST_DEVICE"
+    echo "🎯 Targeting primary device: $FIRST_DEVICE"
     
     APK_PATH="$PROJECT_ROOT/androidApp/build/outputs/apk/debug/androidApp-debug.apk"
     if [ ! -f "$APK_PATH" ]; then
@@ -41,8 +46,8 @@ else
         ./gradlew :androidApp:assembleDebug
     fi
     
-    echo "📲 Installing latest debug APK on device..."
-    adb install -r "$APK_PATH" || echo "Note: ADB install skipped or already up to date"
+    echo "📲 Installing latest debug APK on $FIRST_DEVICE..."
+    adb -s "$FIRST_DEVICE" install -r "$APK_PATH" || echo "Note: ADB install skipped or already up to date"
 fi
 
 TEST_TARGET="${1:-.maestro/flows/}"
@@ -53,8 +58,32 @@ echo "🚀 Running Maestro test flow(s): $TEST_TARGET"
 export MAESTRO_CLI_NO_ANALYTICS=true
 export MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED=true
 
-if [ -f "$TEST_TARGET" ] || [ -d "$TEST_TARGET" ]; then
-    maestro test "$TEST_TARGET" --format junit --output "$REPORT_DIR/maestro-results.xml"
+if [ -f "$TEST_TARGET" ]; then
+    echo "Running single flow: $TEST_TARGET"
+    maestro $DEVICE_FLAG test "$TEST_TARGET" --format junit --output "$REPORT_DIR/$(basename "$TEST_TARGET" .yaml).xml"
+elif [ -d "$TEST_TARGET" ]; then
+    echo "Running all flows in $TEST_TARGET sequentially..."
+    TOTAL_PASSED=0
+    TOTAL_FAILED=0
+    for flow in "$TEST_TARGET"/*.yaml; do
+        [ -e "$flow" ] || continue
+        flow_name=$(basename "$flow" .yaml)
+        echo "--------------------------------------------------"
+        echo "▶️  Executing Flow: $flow_name"
+        if maestro $DEVICE_FLAG test "$flow" --format junit --output "$REPORT_DIR/${flow_name}.xml"; then
+            echo "✅  Passed: $flow_name"
+            ((TOTAL_PASSED++))
+        else
+            echo "❌  Failed: $flow_name"
+            ((TOTAL_FAILED++))
+        fi
+        sleep 2
+    done
+    echo "=================================================="
+    echo "Test Summary: $TOTAL_PASSED Passed, $TOTAL_FAILED Failed"
+    if [ "$TOTAL_FAILED" -gt 0 ]; then
+        exit 1
+    fi
 else
     echo "❌ Specified test target not found: $TEST_TARGET"
     exit 1

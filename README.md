@@ -287,17 +287,19 @@ This template includes a complete **Maestro UI automation suite** specifically d
 # Run a specific test flow
 ./scripts/run_maestro_tests.sh .maestro/flows/01_app_launch.yaml
 ./scripts/run_maestro_tests.sh .maestro/flows/02_auth_flow.yaml
-./scripts/run_maestro_tests.sh .maestro/flows/07_full_e2e_suite.yaml
+./scripts/run_maestro_tests.sh .maestro/flows/09_full_e2e_suite.yaml
 ```
 
 #### Included Maestro Flows (`.maestro/flows/`):
 - `01_app_launch.yaml` — Validates app initialization and splash/login screen visibility
 - `02_auth_flow.yaml` — Tests full sign-in interaction and navigation to Home
-- `03_navigation_flow.yaml` — Verifies tab switching across Home, Search, Notifications, Settings, Profile
+- `03_navigation_flow.yaml` — Verifies tab switching across Home, Search, Media, Notifications, Settings, Profile
 - `04_search_flow.yaml` — Tests search text input, debounce queries, and query clearing
 - `05_settings_flow.yaml` — Tests theme switching (Light, Dark, System Default) and app info
 - `06_profile_and_logout_flow.yaml` — Tests user profile display and session logout
-- `07_full_e2e_suite.yaml` — Complete continuous end-to-end user journey
+- `07_media_flow.yaml` — Tests media screen content and image picker/camera placeholders
+- `08_notifications_flow.yaml` — Tests notifications screen content and push permission placeholders
+- `09_full_e2e_suite.yaml` — Complete continuous end-to-end user journey across all features
 
 JUnit XML reports are automatically saved to `build/reports/maestro/maestro-results.xml` for AI and CI validation.
 

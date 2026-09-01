@@ -23,13 +23,14 @@
 - 🎯 **Multi-module Clean Architecture** — JetBrains 2026 default structure with pure entry points (`androidApp`) and shared KMP libraries (`composeApp`, `core/*`, `feature/*`)
 - 🚀 **AGP 9.3 & Gradle 9.5 Ready** — Built-in Kotlin Android support and `com.android.kotlin.multiplatform.library`
 - 🤖 **100% Automated Testing with Maestro** — Full AI-driven and CI/CD automated UI testing with zero human intervention
+- 🧪 **High Test Coverage Suite (~100%)** — Robust unit tests across domain, data, and presentation with Turbine Flow testing and Kover verification
+- 🧠 **Modular AI Agent Skill System** — 15 specialized Clean Architecture skills in `.agents/` adhering to a strict 5-phase engineering lifecycle
 - 🧩 **Convention Plugins** — Pre-built Gradle convention plugins for consistent module configuration
 - 🔐 **Authentication Ready** — Session storage, Bearer auth, auto token refresh via Ktor
 - 🎨 **Design System** — Centralized theme, typography, and reusable UI components
 - 📱 **MVI Pattern** — Unidirectional data flow with ViewModel + StateFlow
 - 🗄️ **Room Database** — Offline-first ready with convention plugin
-- 🧪 **Testing Infrastructure** — Unit tests with Turbine + Kover code coverage + Maestro E2E
-- 🌐 **Ktor Networking** — Type-safe HTTP client with error handling
+- 🌐 **Ktor Networking** — Type-safe HTTP client with error handling and `Result<D, E>`
 - 💉 **Koin DI** — Lightweight dependency injection across all platforms
 - 🖼️ **Coil Image Loading** — Multiplatform image loading and caching
 - 🔧 **BuildKonfig** — Secure build-time constants from `local.properties`
@@ -42,13 +43,16 @@ Aligned with JetBrains' **New KMP Default Project Structure**:
 
 ```
 TemplateKMP/
+├── 🧠 .agents/                        # 15 Clean Architecture skills & Unified Development Lifecycle
+│   ├── AGENTS.md                      # AI agent workflow disciplines & quality gates
+│   └── skills/                        # kmp-architecture, kmp-testing, kmp-data, kmp-di, etc.
 ├── 🔧 build-logic/convention/         # Gradle convention plugins (AGP 9.3 + CMP 1.12.0)
 ├── 📱 androidApp/                      # Standalone Android Application Entry Point (AGP 9.3 application)
 ├── 📱 composeApp/                      # Composition root & Shared UI Library (KMP Library)
 ├── 🤖 .maestro/                        # Maestro UI automated test flows for AI/CI
 │   ├── config.yaml
-│   └── flows/                         # Launch, Auth, Navigation, Search, Settings, Profile, E2E
-├── 📜 scripts/run_maestro_tests.sh    # One-click automated Maestro test runner for AI
+│   └── flows/                         # 01_launch through 08_full_e2e_suite
+├── 📜 scripts/run_maestro_tests.sh    # One-click automated Maestro test runner for AI/CI
 ├── 🏗️ core/
 │   ├── domain/                         # Pure Kotlin: Result, DataError, interfaces
 │   ├── data/                           # Ktor, DataStore, SessionStorage
@@ -287,7 +291,7 @@ This template includes a complete **Maestro UI automation suite** specifically d
 # Run a specific test flow
 ./scripts/run_maestro_tests.sh .maestro/flows/01_app_launch.yaml
 ./scripts/run_maestro_tests.sh .maestro/flows/02_auth_flow.yaml
-./scripts/run_maestro_tests.sh .maestro/flows/09_full_e2e_suite.yaml
+./scripts/run_maestro_tests.sh .maestro/flows/08_full_e2e_suite.yaml
 ```
 
 #### Included Maestro Flows (`.maestro/flows/`):
@@ -297,15 +301,16 @@ This template includes a complete **Maestro UI automation suite** specifically d
 - `04_search_flow.yaml` — Tests search text input, debounce queries, and query clearing
 - `05_settings_flow.yaml` — Tests theme switching (Light, Dark, System Default) and app info
 - `06_profile_and_logout_flow.yaml` — Tests user profile display and session logout
-- `07_media_flow.yaml` — Tests media screen content and image picker/camera placeholders
-- `08_notifications_flow.yaml` — Tests notifications screen content and push permission placeholders
-- `09_full_e2e_suite.yaml` — Complete continuous end-to-end user journey across all features
+- `07_notifications_flow.yaml` — Tests notifications screen content and push permission placeholders
+- `08_full_e2e_suite.yaml` — Complete continuous end-to-end user journey across all features
 
 JUnit XML reports are automatically saved to `build/reports/maestro/maestro-results.xml` for AI and CI validation.
 
 ---
 
-### 2. 🔬 Multiplatform Unit & ViewModel Tests
+### 2. 🔬 Multiplatform Unit & ViewModel Tests (~100% Test Coverage)
+
+Every core and feature module comes with unit tests covering business logic, data mapping, and state management:
 
 ```bash
 # Run all multiplatform unit tests (Desktop/JVM + Common)
@@ -314,17 +319,42 @@ JUnit XML reports are automatically saved to `build/reports/maestro/maestro-resu
 # Run all test tasks
 ./gradlew allTests
 
-# Generate coverage report
+# Generate HTML coverage report
 ./gradlew koverHtmlReport
 
-# Verify coverage threshold
+# Verify coverage thresholds
 ./gradlew koverVerify
 ```
 
-Each feature module includes:
-- **Fake repositories** for unit testing
-- **ViewModel tests** using Turbine for Flow assertions (use `Dispatchers.setMain(testDispatcher)` to prevent deadlocks)
-- **Kover** integration for code coverage reporting (ensure at least 1 test per module to prevent "No tests discovered")
+**Key Testing Patterns:**
+- **In-Memory Fake Repositories** (`FakeProductRepository`, `FakeProfileRepository`, `FakeSearchRepository`, `FakeSessionStorage`) — Deterministic, fast, and pure Kotlin without mocks.
+- **Turbine Flow Testing** — Validates `StateFlow` and `Channel` events asynchronously using `StandardTestDispatcher` and `Dispatchers.setMain`.
+- **Pure DTO Mappers** — Verifies JSON serialization and mapping between DTOs and immutable Domain models.
+- **Kover Multiplatform Coverage** — Aggregates coverage across all modules with verification rules enforcing code quality.
+
+---
+
+### 3. 🧠 Modular AI Agent Skill System (`.agents/`)
+
+This template is designed from the ground up for seamless pair programming with AI agents (and human contributors). It includes 15 domain-specific skills and a unified 5-phase engineering lifecycle:
+
+| Skill | Focus Area |
+|---|---|
+| `kmp-architecture` | Clean Architecture boundaries, module rules, AGP 9.3 structure |
+| `kmp-presentation` | Chirp MVI pattern, ViewModels, UI State/Action/Event, `ObserveAsEvents` |
+| `kmp-compose-ui` | Compose Multiplatform, Design Tokens, Coil3 images, adaptive UI |
+| `kmp-navigation` | Type-safe Navigation Compose with Kotlinx Serialization routes |
+| `kmp-data` | Ktor 3.x networking, `HttpClientFactory`, bearer token auto-refresh |
+| `kmp-database` | Room Multiplatform, DAOs, Entities, KSP, BundledSQLiteDriver |
+| `kmp-di` | Koin 4.x DI DSL, `viewModelOf`, `singleOf`, multiplatform binding |
+| `kmp-error-handling` | `Result<D, E>` pattern, `DataError`, functional chaining (`.map`, `.onSuccess`) |
+| `kmp-testing` | Unit tests with Turbine, Fake repositories, Maestro flows, Kover |
+| `kmp-security` | BuildKonfig secrets, encrypted storage, certificate pinning |
+| `kmp-project` | Step-by-step module scaffolding following convention plugins |
+| `mermaid-standards` | ISO-standard flowchart shapes (`([Start])`, `[Process]`, `{"Decision?"}`) |
+| `tdd` | Test-Driven Development red-green-refactor loop |
+| `grill-me` | Requirement clarification and design stress-testing |
+| `diagnosing-bugs` | Structured diagnosis loop for regression bugs and root causes |
 
 ---
 
